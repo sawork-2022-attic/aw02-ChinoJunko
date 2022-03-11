@@ -10,6 +10,8 @@ public interface PosService {
 
     public Cart newCart();
 
+    public Cart emptyCart();
+
     public void checkout(Cart cart);
 
     public void total(Cart cart);
@@ -18,6 +20,9 @@ public interface PosService {
 
     public boolean add(String productId, int amount);
 
+    public boolean delete(String productId);
+
+    public boolean modify(String productId, int amount);
 
     public List<Product> products();
 }

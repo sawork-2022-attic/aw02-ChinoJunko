@@ -4,14 +4,39 @@ import com.example.poshell.model.Cart;
 import com.example.poshell.model.Product;
 import org.springframework.stereotype.Component;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class PosInMemoryDB implements PosDB {
-    private List<Product> products = new ArrayList<>();
+
+    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/pos?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+    static final String USER = "root";
+    static final String PASS = "191220002";
+
+    private List<Product> products;
+
+    private Connection conn;
 
     private Cart cart;
+
+    public boolean updateProducts(){
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        try (Statement stmt = conn.createStatement();ResultSet rs = stmt.executeQuery("SELECT * FROM product")){
+            while(rs.next()){
+                String id  = rs.getString("id");
+                String name = rs.getString("name");
+                int price = rs.getInt("price");
+                productArrayList.add(new Product(id,name,price));
+            }
+        }catch (SQLException se){
+            return false;
+        }
+        products = productArrayList;
+        return true;
+    }
 
     @Override
     public List<Product> getProducts() {
@@ -40,8 +65,20 @@ public class PosInMemoryDB implements PosDB {
     }
 
     private PosInMemoryDB() {
-        this.products.add(new Product("PD1", "iPhone 13", 8999));
-        this.products.add(new Product("PD2", "MacBook Pro", 29499));
+        try {
+            Class.forName(JDBC_DRIVER);
+
+            System.out.println("连接数据库...");
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+            updateProducts();
+        }catch(SQLException se){
+            // 处理 JDBC 错误
+            se.printStackTrace();
+        }catch(Exception e){
+            // 处理 Class.forName 错误
+            e.printStackTrace();
+        }
     }
 
 }

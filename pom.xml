@@ -14,7 +14,7 @@
     <name>poshell</name>
     <description>Demo project for Layered Systems</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>1.8</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,6 +30,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

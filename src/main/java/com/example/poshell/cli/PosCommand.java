@@ -38,4 +38,31 @@ public class PosCommand {
         }
         return "ERROR";
     }
+
+    @ShellMethod(value = "Empty Cart", key = "e")
+    public String emptyCart() {
+        posService.emptyCart();
+        return "Empty Cart OK";
+    }
+
+    @ShellMethod(value = "Delete a Product to Cart", key = "d")
+    public String deleteToCart(String productId) {
+        if (posService.delete(productId)) {
+            return posService.getCart().toString();
+        }
+        return "ERROR";
+    }
+
+    @ShellMethod(value = "Modify a Product to Cart", key = "m")
+    public String modifyToCart(String productId, int amount) {
+        if (posService.modify(productId, amount)) {
+            return posService.getCart().toString();
+        }
+        return "ERROR";
+    }
+
+    @ShellMethod(value = "List Cart", key = "c")
+    public String cart() {
+        return posService.getCart().toString();
+    }
 }

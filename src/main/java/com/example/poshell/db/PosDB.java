@@ -4,6 +4,7 @@ import com.example.poshell.model.Cart;
 import com.example.poshell.model.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PosDB {
 
