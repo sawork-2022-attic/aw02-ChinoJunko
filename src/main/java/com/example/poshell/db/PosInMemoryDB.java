@@ -70,7 +70,7 @@ public class PosInMemoryDB implements PosDB {
 
             System.out.println("连接数据库...");
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
-
+            System.out.printf("数据库连接成功："+DB_URL);
             updateProducts();
         }catch(SQLException se){
             // 处理 JDBC 错误
